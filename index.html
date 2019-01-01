@@ -6,17 +6,144 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="node_modules/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="node_modules/bootstrap-social/bootstrap-social.css">
+    <link rel="stylesheet" type="text/css" href="css/styles.css">
 
     <title>Online PTE Timer</title>
   </head>
   <body>
-    <h1>PTE Timer</h1>
+    <div class="wrapper">
+      <!-- navbar header -->
+      <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+        <div class="container">
+          <a class="navbar-brand" href="#">Online PTE Timer</a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ml-auto">
+              <li class="navbar-item mr-3">
+                <a href="" class="nav-link"><span class="fa fa-info fa-lg"></span> Help</a>
+              </li>
+              <li class="navbar-tiem">
+                <a href="" class="nav-link"><span class="fa fa-envelope fa-lg"></span> Contact</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+      <!-- navbar end -->
+
+      <div class="container" id="main-content">
+
+        <div class="row row-content">
+          <div class="col-12 timer-type-header">
+            <h3 id="timerType">Describe Image</h3>
+            <button type="button" class="btn btn-primary" id="focusModel">Focus Model</button>
+            <hr>
+          </div>
+        </div>
+        <div class="row justify-content-center">
+          <div class="timer-container">
+            <!-- buttons of different models -->
+            <div class="btn-group btn-group-toggle" data-toggle="buttons">
+              <label class="btn btn-secondary active">
+                <input type="radio" name="options" id="option1" autocomplete="off" checked> DI
+              </label>
+              <label class="btn btn-secondary">
+                <input type="radio" name="options" id="option2" autocomplete="off"> RA
+              </label>
+              <label class="btn btn-secondary">
+                <input type="radio" name="options" id="option3" autocomplete="off"> RL
+              </label>
+              <label class="btn btn-secondary">
+                <input type="radio" name="options" id="option4" autocomplete="off"> Custom
+              </label>
+            </div>
+
+            <!-- timer body -->
+            <div class="bg-light col-12">
+              <form action="">
+                <div class="form-group pt-4">
+                  <label class="col-6" for="readingTimeInput">Reading time</label>
+                  <input class="col-2" type="" class="form-control" id="readingTimeInput" placeholder="25">
+                  <label class="switch">
+                    <input type="checkbox" checked>
+                    <span class="slider round"></span>
+                  </label>
+                </div>
+
+                <div class="form-group">
+                  <label class="col-6" for="speakingTimeInput">Speaking time</label>
+                  <input class="col-2" type="" class="form-control" id="speakingTimeInput" placeholder="40">
+                  <label class="switch">
+                    <input type="checkbox" checked>
+                    <span class="slider round"></span>
+                  </label>
+                </div>
+
+                <div class="form-group">
+                  <label for="secondsSwitch" class="col-6">Show Seconds</label>
+                  <label class="switch">
+                    <input type="checkbox" id="secondsSwitch" checked>
+                    <span class="slider round"></span>
+                  </label>
+                </div>
+
+                <div class="col-12">
+                  <p class="text-center">Reading time ends in <span id="readingTimeSec">25</span> seconds<br>
+                  <span id="promptStart">(click START to start the timer)</span></p>
+                </div>
+
+                <div class="col-12 pb-4">
+                  <div id="myProgress">
+                    <div id="myBar"></div>
+                    <p><span id="passingTime">0</span>/<span id="totalTime">40</span></p>
+                  </div> 
+                </div>
+              </form>
+
+            </div>
+
+            <div class="row mt-2 mb-2">
+              <div class="ml-3"><button class="btn btn-secondary btn-sm">STOP</button></div>
+              <div class="ml-auto mr-3"><button class="btn btn-primary btn-sm">START</button></div>
+            </div>
+
+          </div>
+
+          
+        </div>
+      </div>
+      <!-- timer end -->
+
+      <!-- footer -->
+      <footer class="footer">
+        <div class="container">
+          <div class="row">
+            <div class="col-6 col-md-4">
+              &copy; 2019 angingen
+            </div>
+            <div class="col"></div>
+            <div class="col-4 col-md-4">
+              <div class="text-right">
+                <a href="https://github.com/angingen/online-pte-timer" target="_blank" class="btn btn-social-icon btn-github"><i class="fa fa-lg fa-github"></i></a>
+                <a href="mailto:angingen@yahoo.com" class="btn btn-social-icon btn-google"><i class="fa fa-lg fa-envelope-o"></i></a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </footer>
+    </div>
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+    <script src="node_modules/jquery/dist/jquery.slim.min.js"></script>
+    <script src="node_modules/popper.js/dist/umd/popper.min.js"></script>
+    <script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="js/scripts.js"></script>
   </body>
 </html>
