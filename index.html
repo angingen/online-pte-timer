@@ -16,7 +16,7 @@
   <body>
     <div class="wrapper">
       <!-- navbar header -->
-      <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+      <nav class="navbar navbar-expand-sm navbar-dark bg-dark" id="navbarSection">
         <div class="container">
           <a class="navbar-brand" href="#">Online PTE Timer</a>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -29,7 +29,7 @@
                 <a href="" class="nav-link"><span class="fa fa-info fa-lg"></span> Help</a>
               </li>
               <li class="navbar-tiem">
-                <a href="" class="nav-link"><span class="fa fa-envelope fa-lg"></span> Contact</a>
+                <a href="" class="nav-link" data-toggle="modal" data-target="#feedbackModal" role="button"><span class="fa fa-envelope fa-lg"></span> Contact</a>
               </li>
             </ul>
           </div>
@@ -37,12 +37,59 @@
       </nav>
       <!-- navbar end -->
 
-      <div class="container" id="main-content">
+      <!-- Feedback modal -->
+      <div class="modal fade" id="feedbackModal" role="dialog">
+        <div class="modal-dialog modal-lg" role="content">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title">Send me your Feedback</h4>
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+              <form action="">
+
+                <div class="form-group row">
+                  <label for="name" class="col-sm-3 col-form-label" required>Name</label>
+                  <div class="col-sm-9">
+                    <input type="text" class="form-control" id="name" name="name">
+                  </div>
+                </div>
+
+                <div class="form-group row">
+                  <label for="email" class="col-sm-3 col-form-label">Email</label>
+                  <div class="col-sm-9">
+                    <input type="email" class="form-control" id="email" name="emailaddress" placeholder="">
+                  </div>
+                </div>
+
+                <div class="form-group row">
+                  <label for="feedback" class="col-sm-3 col-form-label">Feedback</label>
+                  <div class="col-sm-9">
+                    <textarea type="text" class="form-control" id="feedback" name="feedbackContent" aria-label="Feedback" rows="4" maxlength="500" required></textarea>
+                  </div>
+                </div>
+
+                <div class="form-group row">
+                  <div class="offset-sm-3 col-sm-9">
+                    <button class="btn btn-secondary" data-dismiss="modal" type="button">Cancel</button>
+                    <button class="btn btn-primary" data-dismiss="modal" type="submit">Submit</button>
+                  </div>
+                </div>
+
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- modal end -->
+      
+      <!-- timer -->
+      <div class="container unstart" id="main-content">
 
         <div class="row row-content">
           <div class="col-12 timer-type-header">
             <h3 id="timerType">Describe Image</h3>
-            <button type="button" class="btn btn-primary" id="focusModel">Focus Model</button>
+            <button type="button" class="btn btn-primary" id="focusModelButton">Focus Model</button>
             <hr>
           </div>
         </div>
@@ -50,16 +97,16 @@
           <div class="timer-container">
             <!-- buttons of different models -->
             <div class="btn-group btn-group-toggle" data-toggle="buttons">
-              <label class="btn btn-secondary active">
+              <label class="btn btn-secondary active" id="describeImage">
                 <input type="radio" name="options" id="option1" autocomplete="off" checked> DI
               </label>
-              <label class="btn btn-secondary">
+              <label class="btn btn-secondary" id="readAloud">
                 <input type="radio" name="options" id="option2" autocomplete="off"> RA
               </label>
-              <label class="btn btn-secondary">
+              <label class="btn btn-secondary" id="retellLecture" >
                 <input type="radio" name="options" id="option3" autocomplete="off"> RL
               </label>
-              <label class="btn btn-secondary">
+              <label class="btn btn-secondary" id="customSetting">
                 <input type="radio" name="options" id="option4" autocomplete="off"> Custom
               </label>
             </div>
@@ -71,7 +118,7 @@
                   <label class="col-6" for="readingTimeInput">Reading time</label>
                   <input class="col-2" type="" class="form-control" id="readingTimeInput" placeholder="25">
                   <label class="switch">
-                    <input type="checkbox" checked>
+                    <input type="checkbox" id="readingTimeSwitch" checked>
                     <span class="slider round"></span>
                   </label>
                 </div>
@@ -80,7 +127,7 @@
                   <label class="col-6" for="speakingTimeInput">Speaking time</label>
                   <input class="col-2" type="" class="form-control" id="speakingTimeInput" placeholder="40">
                   <label class="switch">
-                    <input type="checkbox" checked>
+                    <input type="checkbox" id="speakingTimeSwitch" checked>
                     <span class="slider round"></span>
                   </label>
                 </div>
@@ -94,14 +141,13 @@
                 </div>
 
                 <div class="col-12">
-                  <p class="text-center">Reading time ends in <span id="readingTimeSec">25</span> seconds<br>
+                  <p class="text-center" id="readingTimePrompt">Reading time ends in <span id="readingTimeSec">25</span> seconds<br>
                   <span id="promptStart">(click START to start the timer)</span></p>
                 </div>
-
                 <div class="col-12 pb-4">
                   <div id="myProgress">
                     <div id="myBar"></div>
-                    <p><span id="passingTime">0</span>/<span id="totalTime">40</span></p>
+                    <p id="speakingTimePrompt" ><span id="passingTime">0</span>/<span id="totalTime">40</span></p>
                   </div> 
                 </div>
               </form>
@@ -109,8 +155,8 @@
             </div>
 
             <div class="row mt-2 mb-2">
-              <div class="ml-3"><button class="btn btn-secondary btn-sm">STOP</button></div>
-              <div class="ml-auto mr-3"><button class="btn btn-primary btn-sm">START</button></div>
+              <div class="ml-3"><button class="btn btn-secondary btn-sm" id="stopButton" disabled>STOP</button></div>
+              <div class="ml-auto mr-3"><button class="btn btn-primary btn-sm" id="startButton">START</button></div>
             </div>
 
           </div>
@@ -121,7 +167,7 @@
       <!-- timer end -->
 
       <!-- footer -->
-      <footer class="footer">
+      <footer class="footer" id="footer">
         <div class="container">
           <div class="row">
             <div class="col-6 col-md-4">

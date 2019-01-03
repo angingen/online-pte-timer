@@ -85,7 +85,7 @@ input:checked + .slider:before {
 }
 
 #myBar {
-	width: 1%;
+	width: 0;
 	height: 30px;
 	background-color: green;
 }
@@ -124,5 +124,11 @@ html {
 #main-content {
 	// background-color: red;
 }
+
+#startButton, #stopButton {
+	width: 100px;
+	text-align: center;
+}
+
 
 
