@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="node_modules/font-awesome/css/font-awesome.min.css">
     <link rel="stylesheet" href="node_modules/bootstrap-social/bootstrap-social.css">
     <link rel="stylesheet" type="text/css" href="css/styles.css">
+    <link rel="stylesheet" href="node_modules/intro.js/minified/introjs.min.css">
     <!-- endbuild -->
 
 
@@ -29,7 +30,7 @@
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav ml-auto">
               <li class="navbar-item mr-3">
-                <a href="" class="nav-link"><span class="fa fa-info fa-lg"></span> Help</a>
+                <a class="nav-link" onclick="introJs().start()"><span class="fa fa-info fa-lg"></span> Help</a>
               </li>
               <li class="navbar-tiem">
                 <a href="" class="nav-link" data-toggle="modal" data-target="#feedbackModal" role="button"><span class="fa fa-envelope fa-lg"></span> Contact</a>
@@ -92,14 +93,14 @@
         <div class="row row-content">
           <div class="col-12 timer-type-header">
             <h3 id="timerType">Describe Image</h3>
-            <button type="button" class="btn btn-primary" id="focusModelButton">Focus Model</button>
+            <button type="button" class="btn btn-primary" id="focusModelButton" data-intro="Enter Focus Model to hide aother components." data-step="6">Focus Model</button>
             <hr>
           </div>
         </div>
         <div class="row justify-content-center">
           <div class="timer-container">
             <!-- buttons of different models -->
-            <div class="btn-group btn-group-toggle" data-toggle="buttons">
+            <div class="btn-group btn-group-toggle" data-toggle="buttons" data-intro="Select different item types to practice." data-step="1">
               <label class="btn btn-secondary active" id="describeImage">
                 <input type="radio" name="options" id="option1" autocomplete="off" checked> DI
               </label>
@@ -109,7 +110,7 @@
               <label class="btn btn-secondary" id="retellLecture" >
                 <input type="radio" name="options" id="option3" autocomplete="off"> RL
               </label>
-              <label class="btn btn-secondary" id="customSetting">
+              <label class="btn btn-secondary" id="customSetting" data-intro="Customize your own reading and speaking time here." data-step="2">
                 <input type="radio" name="options" id="option4" autocomplete="off"> Custom
               </label>
             </div>
@@ -122,7 +123,7 @@
                   <input class="col-2" type="" class="form-control" id="readingTimeInput" placeholder="25">
                   <label class="switch">
                     <input type="checkbox" id="readingTimeSwitch" checked>
-                    <span class="slider round"></span>
+                    <span class="slider round" data-intro="Click to practice without any reading time." data-step="3"></span>
                   </label>
                 </div>
 
@@ -131,7 +132,7 @@
                   <input class="col-2" type="" class="form-control" id="speakingTimeInput" placeholder="40">
                   <label class="switch">
                     <input type="checkbox" id="speakingTimeSwitch" checked>
-                    <span class="slider round"></span>
+                    <span class="slider round" data-intro="Click to practive without any speaking time. ¯\_(ツ)_/¯" data-step="4"></span>
                   </label>
                 </div>
 
@@ -139,7 +140,7 @@
                   <label for="secondsSwitch" class="col-6">Show Seconds</label>
                   <label class="switch">
                     <input type="checkbox" id="secondsSwitch" checked>
-                    <span class="slider round"></span>
+                    <span class="slider round" data-intro="Click to hide the remaining seconds of the speaking time" data-step="5"></span>
                   </label>
                 </div>
 
@@ -163,8 +164,6 @@
             </div>
 
           </div>
-
-          
         </div>
       </div>
       <!-- timer end -->
@@ -195,6 +194,7 @@
     <script src="node_modules/popper.js/dist/umd/popper.min.js"></script>
     <script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
     <script src="js/scripts.js"></script>
+    <script src="node_modules/intro.js/minified/intro.min.js"></script>
     <!-- endbuild -->
     
 
