@@ -8,6 +8,7 @@ $(document).ready(function() {
 	// radio buttons
 
 	$('#describeImage').click(function() {
+		$('#customSetting').removeClass('custom');
 		readingDeafault = 25;
 		$('#readingTimeInput')[0].value = readingDeafault;
 		$('#speakingTimeInput')[0].value = speakingDefault;
@@ -18,6 +19,7 @@ $(document).ready(function() {
 	});
 
 	$('#readAloud').click(function() {
+		$('#customSetting').removeClass('custom');
 		readingDeafault = 30;
 		$('#readingTimeInput')[0].value = readingDeafault;
 		$('#speakingTimeInput')[0].value = speakingDefault;
@@ -28,27 +30,29 @@ $(document).ready(function() {
 	});
 
 	$('#retellLecture').click(function() {
+		$('#customSetting').removeClass('custom');
 		readingDeafault = 10;
 		$('#readingTimeInput')[0].value = readingDeafault;
 		$('#speakingTimeInput')[0].value = speakingDefault;
 		timerReset(readingDeafault);
 		predefindedSetUp();
-		enableAll()
 		$('#timerType')[0].innerHTML = 'Re-tell Lecture';
+		enableAll()
 	});
 
 	$('#customSetting').click(function() {
 		readingDeafault = 25;
 		speakingDefault = 40;
+		$('#customSetting').addClass('custom');
 		$('#readingTimeInput')[0].value = '';
 		$('#speakingTimeInput')[0].value = '';
 		timerReset(readingDeafault);
 		predefindedSetUp();
-		$('#option4')[0].checked = 'true'; // dont know why but otherwise need to click twice
 		enableAll();
 		$('#timerType')[0].innerHTML = 'Custom';
 	});
-	
+
+	// radio button ends
 
 	// focus model relization
 	$('#focusModelButton').click(function() {
@@ -64,20 +68,33 @@ $(document).ready(function() {
 	});
 	// reading time prompt
 	$('#readingTimeInput').change(function() {
-		var customeReadingTime = document.getElementById('readingTimeInput').value || readingDeafault;
+		// validation of the input to be pure number and greater than 0
+		if (/^00*0$|[^\d]+/.test(document.getElementById('readingTimeInput').value)) {
+			alert('Please enter a NUMBER greater than 0.')
+			document.getElementById('readingTimeInput').value = '';
+			var customeReadingTime = readingDeafault
+		} else {
+			var customeReadingTime = + document.getElementById('readingTimeInput').value;
+		}
 		$('#readingTimeSec')[0].innerHTML = customeReadingTime;
 	});
 
 	// progress bar digital countdown
 	$('#speakingTimeInput').change(function() {
-		var customeSpeaking = document.getElementById('speakingTimeInput').value || speakingDefault;
+		if (/^00*0$|[^\d]+/.test(document.getElementById('speakingTimeInput').value)) {
+			alert('Please enter a NUMBER greater than 0.')
+			 document.getElementById('speakingTimeInput').value = '';
+			var customeSpeaking = speakingDefault
+		} else {
+			var customeSpeaking = + document.getElementById('speakingTimeInput').value;
+		}
 		$('#totalTime')[0].innerHTML = customeSpeaking;
 	});
 
 	// reading time switch
 	$('#readingTimeSwitch').click(function() {
 		if ($('#readingTimeSwitch')[0].checked) {
-			if ($('#option4')[0].checked) {
+			if ($('#customSetting').hasClass('custom')) {
 				$('#readingTimeInput')[0].disabled = false;
 			}
 			$('#readingTimePrompt')[0].style.visibility = 'visible';
@@ -96,7 +113,7 @@ $(document).ready(function() {
 	// speaking time switch
 	$('#speakingTimeSwitch').click(function() {
 		if ($('#speakingTimeSwitch')[0].checked) {
-			if ($('#option4')[0].checked) {
+			if ($('#customSetting').hasClass('custom')) {
 				$('#speakingTimeInput')[0].disabled = false;
 			}
 			// disable the show second switch
@@ -229,7 +246,7 @@ function readingTimeCountdown(readingDeafault,callback){
 
 function timerReset(readingDeafault) {
 	$('#passingTime')[0].innerHTML = 0;
-	$('#readingTimeSec')[0].innerHTML = document.getElementById('readingTimeInput').value || readingDeafault;
+	$('#readingTimeSec')[0].innerHTML = + document.getElementById('readingTimeInput').value || readingDeafault;
 	$('#promptStart')[0].style.visibility = 'visible';
 	$('#myBar')[0].style.width = 0;
 	if ($('#readingTimeSwitch')[0].checked){
@@ -247,7 +264,7 @@ function DisableAll() {
 }
 
 function enableAll() {
-	if ($('#option4')[0].checked) {
+	if ($('#customSetting').hasClass('custom')) {
 		$('#readingTimeInput')[0].disabled = false;
 		$('#speakingTimeInput')[0].disabled = false;
 	}
@@ -272,7 +289,7 @@ function predefindedSetUp() {
 
 }
 
-
+// why using $('#custom')[0].checked returns false but still goes into the if statement???
 
 
 
