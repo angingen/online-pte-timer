@@ -50,26 +50,26 @@
               <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
             <div class="modal-body">
-              <form id="ajax-contact" method="post" action="mailer.php">
+              <form method="post" action="mailer.php">
 
                 <div class="form-group row">
                   <label for="name" class="col-sm-3 col-form-label">Name</label>
                   <div class="col-sm-9">
-                    <input type="text" class="form-control" id="name" name="name" required>
+                    <input type="text" class="form-control" name="name" required>
                   </div>
                 </div>
 
                 <div class="form-group row">
                   <label for="email" class="col-sm-3 col-form-label">Email</label>
                   <div class="col-sm-9">
-                    <input type="email" class="form-control" id="email" name="emailaddress" placeholder="">
+                    <input type="email" class="form-control" name="email" placeholder="Enter email if you would like receive response from me.">
                   </div>
                 </div>
 
                 <div class="form-group row">
                   <label for="feedback" class="col-sm-3 col-form-label">Feedback</label>
                   <div class="col-sm-9">
-                    <textarea type="text" class="form-control" id="feedback" name="feedbackContent" aria-label="Feedback" rows="4" maxlength="500" required></textarea>
+                    <textarea type="text" class="form-control" name="feedback" aria-label="Feedback" rows="4" maxlength="500" required></textarea>
                   </div>
                 </div>
 
@@ -80,7 +80,7 @@
                 <div class="form-group row">
                   <div class="offset-sm-3 col-sm-9">
                     <button class="btn btn-secondary" data-dismiss="modal" type="button">Cancel</button>
-                    <button class="btn btn-primary" data-dismiss="modal" type="submit">Submit</button>
+                    <button class="btn btn-primary" type="submit">Submit</button>
                   </div>
                 </div>
 
@@ -199,7 +199,6 @@
     <script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
     <script src="node_modules/intro.js/minified/intro.min.js"></script>
     <script src="js/scripts.js"></script>
-    <script src="js/app.js"></script>
     <!-- endbuild -->
     
 

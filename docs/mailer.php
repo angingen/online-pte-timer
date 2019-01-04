@@ -1,51 +1,56 @@
 <?php
-
-    // Only process POST reqeusts.
-    if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        // Get the form fields and remove whitespace.
-        $name = strip_tags(trim($_POST["name"]));
-				$name = str_replace(array("\r","\n"),array(" "," "),$name);
-        $email = filter_var(trim($_POST["email"]), FILTER_SANITIZE_EMAIL);
-        $message = trim($_POST["message"]);
-
-        // Check that data was sent to the mailer.
-        if ( empty($name) OR empty($message) OR !filter_var($email, FILTER_VALIDATE_EMAIL)) {
-            // Set a 400 (bad request) response code and exit.
-            http_response_code(400);
-            echo "Oops! There was a problem with your submission. Please complete the form and try again.";
-            exit;
+    if(isset($_POST['feedback'])) {
+        $email_to = "angingen@yahoo.com";
+        $email_subject = "Feedback received from online-pte-timer";
+        function died($error) {
+            // your error code can go here
+            echo "We are very sorry, but there were error(s) found with the form you submitted. ";
+            echo "These errors appear below.<br /><br />";
+            echo $error."<br /><br />";
+            echo "Please go back and fix these errors.<br /><br />";
+            die();
         }
 
-        // Set the recipient email address.
-        // FIXME: Update this to your desired email address.
-        $recipient = "angingen@yahoo.com";
-
-        // Set the email subject.
-        $subject = "New contact from $name";
-
-        // Build the email content.
-        $email_content = "Name: $name\n";
-        $email_content .= "Email: $email\n\n";
-        $email_content .= "Message:\n$message\n";
-
-        // Build the email headers.
-        $email_headers = "From: $name <$email>";
-
-        // Send the email.
-        if (mail($recipient, $subject, $email_content, $email_headers)) {
-            // Set a 200 (okay) response code.
-            http_response_code(200);
-            echo "Thank You! Your message has been sent.";
-        } else {
-            // Set a 500 (internal server error) response code.
-            http_response_code(500);
-            echo "Oops! Something went wrong and we couldn't send your message.";
+         // validation expected data exists
+        if(!isset($_POST['name']) ||
+            !isset($_POST['feedback'])) {
+            died('We are sorry, but there appears to be a problem with the form you submitted.');       
         }
 
-    } else {
-        // Not a POST request, set a 403 (forbidden) response code.
-        http_response_code(403);
-        echo "There was a problem with your submission, please try again.";
+        $name = $_POST['name']; // required
+        $email = $_POST['email']; // required
+        $feedback = $_POST['feedback']; // required
+
+        if(strlen($comments) < 2) {
+        $error_message .= 'The Comments you entered do not appear to be valid.<br />';
+        }
+
+        if(strlen($error_message) > 0) {
+        died($error_message);
+        }
+
+        $email_message = "Form details below.\n\n";
+
+         
+        function clean_string($string) {
+          $bad = array("content-type","bcc:","to:","cc:","href");
+          return str_replace($bad,"",$string);
+        }
+
+         
+
+        $email_message .= "Name: ".clean_string($name)."\n";
+        $email_message .= "Email: ".clean_string($email)."\n";
+        $email_message .= "Feedback: ".clean_string($feedback)."\n";
+
+        // create email headers
+        $headers = 'From: '.$email."\r\n".
+        'Reply-To: '.$email."\r\n" .
+        'X-Mailer: PHP/' . phpversion();
+        @mail($email_to, $email_subject, $email_message, $headers);  
+        ?>
+
+        <!-- include your own success html here -->
+        Thank you for contacting us. We will be in touch with you very soon.
     }
-
 ?>

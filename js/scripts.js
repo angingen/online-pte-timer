@@ -249,6 +249,7 @@ function timerReset(readingDeafault) {
 	$('#readingTimeSec')[0].innerHTML = + document.getElementById('readingTimeInput').value || readingDeafault;
 	$('#promptStart')[0].style.visibility = 'visible';
 	$('#myBar')[0].style.width = 0;
+	$('#myBar').removeClass('pause');
 	if ($('#readingTimeSwitch')[0].checked){
 		$('#readingTimePrompt')[0].style.visibility = 'visible';
 	}
@@ -271,6 +272,7 @@ function enableAll() {
 	$('#readingTimeSwitch')[0].disabled = false;
 	$('#speakingTimeSwitch')[0].disabled = false;
 	$('#secondsSwitch')[0].disabled = false;
+	$('#speakingTimePrompt')[0].style.visibility = 'visible';
 }
 
 function predefindedSetUp() {
