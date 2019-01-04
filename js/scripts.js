@@ -13,6 +13,7 @@ $(document).ready(function() {
 		$('#speakingTimeInput')[0].value = speakingDefault;
 		timerReset(readingDeafault);
 		predefindedSetUp();
+		enableAll()
 		$('#timerType')[0].innerHTML = 'Describe Image';
 	});
 
@@ -22,6 +23,7 @@ $(document).ready(function() {
 		$('#speakingTimeInput')[0].value = speakingDefault;
 		timerReset(readingDeafault);
 		predefindedSetUp();
+		enableAll()
 		$('#timerType')[0].innerHTML = 'Read Aloud';
 	});
 
@@ -31,6 +33,7 @@ $(document).ready(function() {
 		$('#speakingTimeInput')[0].value = speakingDefault;
 		timerReset(readingDeafault);
 		predefindedSetUp();
+		enableAll()
 		$('#timerType')[0].innerHTML = 'Re-tell Lecture';
 	});
 
@@ -136,8 +139,10 @@ $(document).ready(function() {
 			$('#myBar').removeClass('pause');
 			if ($('#readingTimeSwitch')[0].checked && $('#speakingTimeSwitch')[0].checked) {
 				readingTimeCountdown(readingDeafault,progressBarCountdown);
+			} else if ($('#readingTimeSwitch')[0].checked){
+				readingTimeCountdown(); // only reading time checked
 			} else {
-				progressBarCountdown();
+				progressBarCountdown(); // only speaking time checked
 			}
 			
 		} else { // click the RESTART button
@@ -174,7 +179,10 @@ function progressBarCountdown(){
 	var width = 0;
 	function frame() {
 		if (width >= 100 || $('#myBar').hasClass('abort') || $('#myBar').hasClass('pause')) {
-			if (! $('#myBar').hasClass('pause')) {
+			if (!$('#myBar').hasClass('pause')) {
+				if (!$('#myBar').hasClass('abort')) {
+					$('#promptStart')[0].innerHTML = '(Status: End)';
+				}
 				clearInterval(id);
 			} else {
 				$('#promptStart')[0].innerHTML = '(Status: Pausing)';
@@ -197,10 +205,13 @@ function readingTimeCountdown(readingDeafault,callback){
 		if (readingTime == 0 || $('#myBar').hasClass('abort') || $('#myBar').hasClass('pause')) {
 			if (readingTime == 0 ) {
 				$('#readingTimePrompt')[0].style.visibility = 'hidden';
-				$('#promptStart')[0].innerHTML = '(Status: Speaking)';
+				$('#promptStart')[0].innerHTML = '(Status: End)';
 				$('#promptStart')[0].style.visibility = 'visible';
 				clearInterval(id);
-				callback();
+				if ($('#speakingTimeSwitch')[0].checked){
+					$('#promptStart')[0].innerHTML = '(Status: Speaking)';
+					callback();
+				}
 			} else if ($('#myBar').hasClass('pause')) {
 				$('#promptStart')[0].innerHTML = '(Status: Pausing)';
 				$('#promptStart')[0].style.visibility = 'visible';
