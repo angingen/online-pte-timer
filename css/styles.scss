@@ -4,6 +4,10 @@ $lt-gray: #CDCCCA;
 $pale-gray: #EEEBE7;
 $lt-blue: #6F91B5;
 $pale-blue: #B7E1E4;
+$dk-red: #C24332;
+$hv-red: #a2382a;
+$at-red: #8e3125;
+
 
 .timer-type-header {
 	position: relative;
@@ -14,6 +18,11 @@ $pale-blue: #B7E1E4;
 		right: 0;
 		margin-right: 20px;
 	}
+}
+
+@mixin btn-color($color) {
+	background-color: $color;
+	border: 1px solid $color;
 }
 // slider css from https://www.w3schools.com/howto/howto_css_switch.asp
 /* The switch - the box around the slider */
@@ -137,18 +146,31 @@ html {
 }
 
 #focusModelButton, #startButton {
-	background-color: $pte-blue;
-	border: 1px solid $pte-blue;
+	@include btn-color($pte-blue);
 }
 
 #focusModelButton:hover, #startButton:hover {
-	background-color: $lt-blue;
-	border: 1px solid $lt-blue;
+	@include btn-color($lt-blue);
 }
 
+#focusModelButton {
+	width: 120px;
+}
 
 input:disabled {
 	background-color: $pale-gray;
+}
+
+#customSetting {
+	@include btn-color($dk-red);
+}
+
+#customSetting.active {
+	@include btn-color($at-red);
+}
+
+#customSetting:hover {
+	@include btn-color($hv-red);
 }
 
 

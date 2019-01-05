@@ -3,60 +3,57 @@ $(document).ready(function() {
 	var speakingDefault = 40;
 	var readingTimeDefault = 25;
 
-	$('#readingTimeInput')[0].value = readingTimeDefault;
-	$('#speakingTimeInput')[0].value = speakingDefault;
+	inputInitializing(readingTimeDefault,speakingDefault);
 	predefindedSetUp();
 
 	// radio buttons
-	// custom
+	// DI
 	$('#describeImage').click(function() {
+		$('#timerType')[0].innerHTML = 'Describe Image';
 		$('#customSetting').removeClass('custom');
 		readingTimeDefault = 25;
-		$('#readingTimeInput')[0].value = readingTimeDefault;
-		$('#speakingTimeInput')[0].value = speakingDefault;
+		inputInitializing(readingTimeDefault,speakingDefault);
 		timerReset(readingTimeDefault);
 		predefindedSetUp();
 		enableAll()
-		$('#timerType')[0].innerHTML = 'Describe Image';
+		
 	});
-
+	// RA
 	$('#readAloud').click(function() {
+		$('#timerType')[0].innerHTML = 'Read Aloud';
 		$('#customSetting').removeClass('custom');
 		readingTimeDefault = 30;
-		$('#readingTimeInput')[0].value = readingTimeDefault;
-		$('#speakingTimeInput')[0].value = speakingDefault;
+		inputInitializing(readingTimeDefault,speakingDefault);
 		timerReset(readingTimeDefault);
 		predefindedSetUp();
 		enableAll()
-		$('#timerType')[0].innerHTML = 'Read Aloud';
+		
 	});
-
+	// RL
 	$('#retellLecture').click(function() {
+		$('#timerType')[0].innerHTML = 'Re-tell Lecture';
 		$('#customSetting').removeClass('custom');
 		readingTimeDefault = 10;
-		$('#readingTimeInput')[0].value = readingTimeDefault;
-		$('#speakingTimeInput')[0].value = speakingDefault;
+		inputInitializing(readingTimeDefault,speakingDefault);
 		timerReset(readingTimeDefault);
 		predefindedSetUp();
-		$('#timerType')[0].innerHTML = 'Re-tell Lecture';
 		enableAll()
 	});
-
+	// Custom
 	$('#customSetting').click(function() {
+		$('#timerType')[0].innerHTML = 'Custom';
+		$('#customSetting').addClass('custom');
 		readingTimeDefault = 25;
 		speakingDefault = 40;
-		$('#customSetting').addClass('custom');
-		$('#readingTimeInput')[0].value = '';
-		$('#speakingTimeInput')[0].value = '';
+		inputInitializing('','');
 		timerReset(readingTimeDefault);
 		predefindedSetUp();
 		enableAll();
-		$('#timerType')[0].innerHTML = 'Custom';
+		
 	});
-
 	// radio button ends
 
-	// focus model relization
+	// focus model relization - hide the footer and the header
 	$('#focusModelButton').click(function() {
 		if($('#focusModelButton')[0].innerHTML === 'Focus Model') {
 			$('#navbarSection')[0].style.display = 'none';
@@ -68,13 +65,15 @@ $(document).ready(function() {
 			$('#focusModelButton')[0].innerHTML = 'Focus Model';
 		}
 	});
+
 	// reading time prompt
 	$('#readingTimeInput').change(function() {
 		// validation of the input to be pure number and greater than 0
 		if (/^00*0$|[^\d]+/.test(document.getElementById('readingTimeInput').value)) {
 			alert('Please enter a NUMBER greater than 0.')
+			// reset the input field
 			document.getElementById('readingTimeInput').value = '';
-			var customeReadingTime = readingTimeDefault
+			var customeReadingTime = readingTimeDefault;
 		} else {
 			var customeReadingTime = + document.getElementById('readingTimeInput').value;
 		}
@@ -96,18 +95,21 @@ $(document).ready(function() {
 	// reading time switch
 	$('#readingTimeSwitch').click(function() {
 		if ($('#readingTimeSwitch')[0].checked) {
+			// input fields are only avaliable in the custom model
 			if ($('#customSetting').hasClass('custom')) {
-				$('#readingTimeInput')[0].disabled = false;
+				$('#readingTimeInput')[0].disabled = false; // enables input
 			}
 			$('#readingTimePrompt')[0].style.visibility = 'visible';
-			$('#startButton')[0].disabled = false;
+			$('#startButton')[0].disabled = false; // any coundown selecte will enables the start button
 		} else {
+			// reading time unchecked: disable input field, hide reading time prompt
 			$('#readingTimeInput')[0].disabled = true;
 			$('#readingTimePrompt')[0].style.visibility = 'hidden';
 			$('#promptStart')[0].style.visibility = 'visible';
 			if (!$('#speakingTimeSwitch')[0].checked) {
+				// no countdown checked: alert and disable start button
 				alert('Please enable at least one countdown to use the timer.');
-				$('#startButton')[0].disabled = true;;
+				$('#startButton')[0].disabled = true;
 			}
 		}
 	});
@@ -129,8 +131,8 @@ $(document).ready(function() {
 			$('#secondsSwitch')[0].checked = false; 
 			$('#secondsSwitch')[0].disabled = true;
 			$('#speakingTimePrompt')[0].style.visibility = 'hidden';
-			// check if two timers are disabled
 			if (!$('#readingTimeSwitch')[0].checked) {
+				// no countdown checked: alert and disable start button
 				alert('Please enable at least one countdown to use the timer.');
 				$('#startButton')[0].disabled = true;
 			} 
@@ -149,25 +151,28 @@ $(document).ready(function() {
 	
 	// start the timer 
 	$('#startButton').click(function() {
-		$('#stopButton')[0].disabled = false;
+		$('#stopButton')[0].disabled = false; // enable stop button
 		if($('#startButton')[0].innerHTML === 'START'){
 			disableAll();
-			$('#myBar')[0].style.backgroundColor = '#61B087';
-			$('#startButton')[0].innerHTML = 'CANCLE';
+			// restore all the previous changes by js
 			$('#promptStart')[0].style.visibility = 'hidden';
+			$('#myBar')[0].style.backgroundColor = '#61B087';
 			$('#myBar').removeClass('abort');
 			$('#myBar').removeClass('pause');
+			$('#startButton')[0].innerHTML = 'CANCEL';
+
 			if ($('#readingTimeSwitch')[0].checked && $('#speakingTimeSwitch')[0].checked) {
+				// run reading and speaking countdown sequently
 				readingTimeCountdown(readingTimeDefault,progressBarCountdown);
-			} else if ($('#readingTimeSwitch')[0].checked){
-				readingTimeCountdown(readingTimeDefault,disableStop); // only reading time checked
-			} else {
-				progressBarCountdown(); // only speaking time checked
+			} else if ($('#readingTimeSwitch')[0].checked){ // only reading time checked
+				readingTimeCountdown(readingTimeDefault,disableStop); 
+			} else { // only speaking time checked
+				progressBarCountdown(); 
 			}
 			
-		} else { // click the CANCLE button
+		} else { // click the CANCEL button
 			$('#startButton')[0].innerHTML = 'START';
-			$('#myBar').addClass('abort');
+			$('#myBar').addClass('abort'); // terminate current countdown
 			// restore the stop button
 			$('#stopButton')[0].innerHTML = 'PAUSE';
 			$('#stopButton')[0].disabled = true;
@@ -185,6 +190,7 @@ $(document).ready(function() {
 
 		} else {
 			$('#stopButton')[0].innerHTML = 'PAUSE';
+			// restore timer color 
 			$('#myBar')[0].style.backgroundColor = '#61B087';
 			$('#myBar').removeClass('pause');
 		}
@@ -193,6 +199,7 @@ $(document).ready(function() {
 })
 
 function progressBarCountdown(){
+	// show countdown progress by change the length of #myBar
 	var speakingTime = document.getElementById('speakingTimeInput').value || 40;
 	var passingTime = 0 
 	var id = setInterval(frame, 1000);
@@ -200,12 +207,12 @@ function progressBarCountdown(){
 	var width = 0;
 	function frame() {
 		if (width >= 100 || $('#myBar').hasClass('abort') || $('#myBar').hasClass('pause')) {
-			if (!$('#myBar').hasClass('pause')) {
+			if (!$('#myBar').hasClass('pause')) { // when CANCEL clicked or coundwon finished
 				clearInterval(id);
-			} else {
+			} else { // when paused
 				$('#promptStart')[0].innerHTML = '(Status: Pausing)';
 			}
-			$('#myBar')[0].style.backgroundColor = '#C24332';
+			$('#myBar')[0].style.backgroundColor = '#C24332'; // change progress bar to red
 		} else {
 			width += widthUnit;
 			$('#myBar')[0].style.width = width + '%';
@@ -232,6 +239,7 @@ function readingTimeCountdown(readingTimeDefault,callback){
 				$('#promptStart')[0].innerHTML = '(Status: End)';
 				$('#promptStart')[0].style.visibility = 'visible';
 				clearInterval(id);
+				// reading coundown finished: 
 				if ($('#speakingTimeSwitch')[0].checked){
 					$('#promptStart')[0].innerHTML = '(Status: Speaking)';
 				}
@@ -252,15 +260,15 @@ function readingTimeCountdown(readingTimeDefault,callback){
 }
 
 function timerReset(readingTimeDefault) {
-	$('#passingTime')[0].innerHTML = 0;
-	$('#readingTimeSec')[0].innerHTML = + document.getElementById('readingTimeInput').value || readingTimeDefault;
-	$('#promptStart')[0].style.visibility = 'visible';
-	$('#myBar')[0].style.width = 0;
-	$('#myBar').removeClass('pause');
 	if ($('#readingTimeSwitch')[0].checked){
 		$('#readingTimePrompt')[0].style.visibility = 'visible';
 	}
+	$('#readingTimeSec')[0].innerHTML = + document.getElementById('readingTimeInput').value || readingTimeDefault;
+	$('#promptStart')[0].style.visibility = 'visible';
 	$('#promptStart')[0].innerHTML = '(click START to start the timer)';
+	$('#passingTime')[0].innerHTML = 0;
+	$('#myBar')[0].style.width = 0;
+	$('#myBar').removeClass('pause');
 }
 
 function disableAll() {
@@ -268,15 +276,16 @@ function disableAll() {
 	$('#readingTimeInput')[0].disabled = true;
 	$('#speakingTimeSwitch')[0].disabled = true;
 	$('#speakingTimeInput')[0].disabled = true;
-	// $('#secondsSwitch')[0].disabled = true;
 }
 
 function disableStop() {
+	// callback function for reading time countdown (when speaking time unchecked)
 	$('#stopButton')[0].disabled = true;
 }
 
 function enableAll() {
 	if ($('#customSetting').hasClass('custom')) {
+		// input field only enables when under custom model
 		if ($('#readingTimeSwitch')[0].checked) {
 			$('#readingTimeInput')[0].disabled = false;
 		}
@@ -294,22 +303,21 @@ function enableAll() {
 
 function predefindedSetUp() {
 	$('#readingTimeInput')[0].disabled = true;
-	$('#speakingTimeInput')[0].disabled = true;
-	$('#startButton')[0].disabled = false;
 	$('#readingTimeSwitch')[0].checked = true;
-	$('#speakingTimeSwitch')[0].checked = true;
-	$('#secondsSwitch')[0].checked = false;
-	$('#speakingTimePrompt')[0].style.visibility = 'hidden';
 	$('#readingTimePrompt')[0].style.visibility = 'visible';
-	$('#myBar').addClass('abort');
-	$('#myBar').removeClass('pause');
+	$('#speakingTimeInput')[0].disabled = true;
+	$('#speakingTimeSwitch')[0].checked = true;
+	$('#speakingTimePrompt')[0].style.visibility = 'hidden';
+	$('#secondsSwitch')[0].checked = false;
 	$('#startButton')[0].innerHTML = 'START';
+	$('#startButton')[0].disabled = false;
 	$('#stopButton')[0].innerHTML = 'PAUSE';
-	$('#totalTime').text('40');
 	$('#stopButton')[0].disabled = true;
 	$('#promptStart')[0].innerHTML = '(click START to start the timer)';
 	$('#myBar')[0].style.backgroundColor = '#61B087';
-
+	$('#myBar').addClass('abort');
+	$('#myBar').removeClass('pause');
+	$('#totalTime').text('40');
 }
 
 function inputInitializing(reading,speaking) {
