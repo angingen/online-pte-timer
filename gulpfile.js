@@ -78,6 +78,6 @@ gulp.task('usemin',function() {
 });
 
 gulp.task('build',['clean'], function() {
-	gulp.start('copyfonts','copyphp','usemin');
+	gulp.start('copyfonts','imagemin','usemin');
 });
 	
