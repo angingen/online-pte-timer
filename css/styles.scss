@@ -116,8 +116,11 @@ input:checked + .slider:before {
 	}
 }
 
-html {
+html,body {
     height: 100%;
+    width: 100%;
+    padding: 0;
+    margin: 0;
 }
 .wrapper {
     min-height: 100vh;
@@ -153,10 +156,6 @@ html {
 	@include btn-color($lt-blue);
 }
 
-#focusModelButton {
-	width: 120px;
-}
-
 input:disabled {
 	background-color: $pale-gray;
 }
@@ -171,6 +170,12 @@ input:disabled {
 
 #customSetting:hover {
 	@include btn-color($hv-red);
+}
+
+#speakingTimeInput, #readingTimeInput {
+	padding-right: 5px;
+	padding-left: 5px;
+	// text-align: center;
 }
 
 

@@ -53,16 +53,16 @@ $(document).ready(function() {
 	});
 	// radio button ends
 
-	// focus model relization - hide the footer and the header
+	// Focus model relization - hide the footer and the header
 	$('#focusModelButton').click(function() {
-		if($('#focusModelButton')[0].innerHTML === 'Focus Model') {
+		if($('#focusModelButton')[0].innerHTML === 'Focus') {
 			$('#navbarSection')[0].style.display = 'none';
 			$('#footer')[0].style.display = 'none';
 			document.getElementById('focusModelButton').innerHTML = 'Return';
 		} else {
 			$('#navbarSection')[0].style.display = '';
 			$('#footer')[0].style.display = '';
-			$('#focusModelButton')[0].innerHTML = 'Focus Model';
+			$('#focusModelButton')[0].innerHTML = 'Focus';
 		}
 	});
 
