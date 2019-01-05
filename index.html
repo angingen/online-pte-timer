@@ -28,12 +28,12 @@
           </button>
 
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav ml-auto">
+            <ul class="navbar-nav ml-auto text-center">
               <li class="navbar-item mr-3">
-                <a class="nav-link" onclick="introJs().start()"><span class="fa fa-info fa-lg"></span> Help</a>
+                <a class="nav-link" onclick="introJs().start()"><span class="fa fa-info fa-lg d-none d-sm-block"></span> Help</a>
               </li>
               <li class="navbar-tiem">
-                <a href="" class="nav-link" data-toggle="modal" data-target="#feedbackModal" role="button"><span class="fa fa-envelope fa-lg"></span> Contact</a>
+                <a href="#" class="nav-link" data-toggle="modal" data-target="#feedbackModal" role="button"><span class="fa fa-envelope fa-lg d-none d-sm-block"></span> Contact</a>
               </li>
             </ul>
           </div>
@@ -96,8 +96,8 @@
 
         <div class="row row-content">
           <div class="col-12 timer-type-header">
-            <h3 id="timerType">Describe Image</h3>
-            <button type="button" class="btn btn-primary" id="focusModelButton" data-intro="Enter Focus Model to hide aother components." data-step="6">Focus Model</button>
+            <h4 id="timerType">Describe Image</h4>
+            <button type="button" class="btn btn-primary btn-md" id="focusModelButton" data-intro="Enter Focus Model to hide any other components." data-step="6">Focus Model</button>
             <hr>
           </div>
         </div>
@@ -114,7 +114,7 @@
               <label class="btn btn-secondary" id="retellLecture" >
                 <input type="radio" name="options" id="option3" autocomplete="off"> RL
               </label>
-              <label class="btn btn-secondary" id="customSetting" data-intro="Customize your own reading and speaking time here." data-step="2">
+              <label class="btn btn-secondary" id="customSetting" data-intro="Customize your own reading and speaking time." data-step="2">
                 <input type="radio" name="options" id="option4" autocomplete="off"> Custom
               </label>
             </div>
@@ -127,7 +127,7 @@
                   <input class="col-2" type="" class="form-control" id="readingTimeInput" placeholder="25">
                   <label class="switch">
                     <input type="checkbox" id="readingTimeSwitch" checked>
-                    <span class="slider round" data-intro="Click to practice without any reading time." data-step="3"></span>
+                    <span class="slider round" data-intro="Switch ON/OFF the reading time countdown." data-step="3"></span>
                   </label>
                 </div>
 
@@ -136,15 +136,15 @@
                   <input class="col-2" type="" class="form-control" id="speakingTimeInput" placeholder="40">
                   <label class="switch">
                     <input type="checkbox" id="speakingTimeSwitch" checked>
-                    <span class="slider round" data-intro="Click to practive without any speaking time. ¯\_(ツ)_/¯" data-step="4"></span>
+                    <span class="slider round" data-intro="Switch ON/OFF the speaking time countdown. ¯\_(ツ)_/¯" data-step="4"></span>
                   </label>
                 </div>
 
                 <div class="form-group">
                   <label for="secondsSwitch" class="col-6">Show Seconds</label>
                   <label class="switch">
-                    <input type="checkbox" id="secondsSwitch" checked>
-                    <span class="slider round" data-intro="Click to hide the remaining seconds of the speaking time" data-step="5"></span>
+                    <input type="checkbox" id="secondsSwitch">
+                    <span class="slider round" data-intro="Switch ON/OFF the digital countdown of the speaking time." data-step="5"></span>
                   </label>
                 </div>
 
@@ -163,7 +163,7 @@
             </div>
 
             <div class="row mt-2 mb-4">
-              <div class="ml-3"><button class="btn btn-secondary btn-sm" id="stopButton" disabled>STOP</button></div>
+              <div class="ml-3"><button class="btn btn-secondary btn-sm" id="stopButton" disabled>PAUSE</button></div>
               <div class="ml-auto mr-3"><button class="btn btn-primary btn-sm" id="startButton">START</button></div>
             </div>
 

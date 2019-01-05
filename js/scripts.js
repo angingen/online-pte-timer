@@ -1,18 +1,20 @@
 $(document).ready(function() {
+	// default time
 	var speakingDefault = 40;
-	var readingDeafault = 25;
-	$('#readingTimeInput')[0].value = readingDeafault;
+	var readingTimeDefault = 25;
+
+	$('#readingTimeInput')[0].value = readingTimeDefault;
 	$('#speakingTimeInput')[0].value = speakingDefault;
 	predefindedSetUp();
 
 	// radio buttons
-
+	// custom
 	$('#describeImage').click(function() {
 		$('#customSetting').removeClass('custom');
-		readingDeafault = 25;
-		$('#readingTimeInput')[0].value = readingDeafault;
+		readingTimeDefault = 25;
+		$('#readingTimeInput')[0].value = readingTimeDefault;
 		$('#speakingTimeInput')[0].value = speakingDefault;
-		timerReset(readingDeafault);
+		timerReset(readingTimeDefault);
 		predefindedSetUp();
 		enableAll()
 		$('#timerType')[0].innerHTML = 'Describe Image';
@@ -20,10 +22,10 @@ $(document).ready(function() {
 
 	$('#readAloud').click(function() {
 		$('#customSetting').removeClass('custom');
-		readingDeafault = 30;
-		$('#readingTimeInput')[0].value = readingDeafault;
+		readingTimeDefault = 30;
+		$('#readingTimeInput')[0].value = readingTimeDefault;
 		$('#speakingTimeInput')[0].value = speakingDefault;
-		timerReset(readingDeafault);
+		timerReset(readingTimeDefault);
 		predefindedSetUp();
 		enableAll()
 		$('#timerType')[0].innerHTML = 'Read Aloud';
@@ -31,22 +33,22 @@ $(document).ready(function() {
 
 	$('#retellLecture').click(function() {
 		$('#customSetting').removeClass('custom');
-		readingDeafault = 10;
-		$('#readingTimeInput')[0].value = readingDeafault;
+		readingTimeDefault = 10;
+		$('#readingTimeInput')[0].value = readingTimeDefault;
 		$('#speakingTimeInput')[0].value = speakingDefault;
-		timerReset(readingDeafault);
+		timerReset(readingTimeDefault);
 		predefindedSetUp();
 		$('#timerType')[0].innerHTML = 'Re-tell Lecture';
 		enableAll()
 	});
 
 	$('#customSetting').click(function() {
-		readingDeafault = 25;
+		readingTimeDefault = 25;
 		speakingDefault = 40;
 		$('#customSetting').addClass('custom');
 		$('#readingTimeInput')[0].value = '';
 		$('#speakingTimeInput')[0].value = '';
-		timerReset(readingDeafault);
+		timerReset(readingTimeDefault);
 		predefindedSetUp();
 		enableAll();
 		$('#timerType')[0].innerHTML = 'Custom';
@@ -72,7 +74,7 @@ $(document).ready(function() {
 		if (/^00*0$|[^\d]+/.test(document.getElementById('readingTimeInput').value)) {
 			alert('Please enter a NUMBER greater than 0.')
 			document.getElementById('readingTimeInput').value = '';
-			var customeReadingTime = readingDeafault
+			var customeReadingTime = readingTimeDefault
 		} else {
 			var customeReadingTime = + document.getElementById('readingTimeInput').value;
 		}
@@ -149,39 +151,41 @@ $(document).ready(function() {
 	$('#startButton').click(function() {
 		$('#stopButton')[0].disabled = false;
 		if($('#startButton')[0].innerHTML === 'START'){
-			DisableAll();
-			$('#startButton')[0].innerHTML = 'RESTART';
+			disableAll();
+			$('#myBar')[0].style.backgroundColor = '#61B087';
+			$('#startButton')[0].innerHTML = 'CANCLE';
 			$('#promptStart')[0].style.visibility = 'hidden';
 			$('#myBar').removeClass('abort');
 			$('#myBar').removeClass('pause');
 			if ($('#readingTimeSwitch')[0].checked && $('#speakingTimeSwitch')[0].checked) {
-				readingTimeCountdown(readingDeafault,progressBarCountdown);
+				readingTimeCountdown(readingTimeDefault,progressBarCountdown);
 			} else if ($('#readingTimeSwitch')[0].checked){
-				readingTimeCountdown(); // only reading time checked
+				readingTimeCountdown(readingTimeDefault,disableStop); // only reading time checked
 			} else {
 				progressBarCountdown(); // only speaking time checked
 			}
 			
-		} else { // click the RESTART button
+		} else { // click the CANCLE button
 			$('#startButton')[0].innerHTML = 'START';
 			$('#myBar').addClass('abort');
 			// restore the stop button
-			$('#stopButton')[0].innerHTML = 'STOP';
+			$('#stopButton')[0].innerHTML = 'PAUSE';
 			$('#stopButton')[0].disabled = true;
 			//reset timer
-			timerReset(readingDeafault);
+			timerReset(readingTimeDefault);
 			enableAll();
 		}
 	});	
 
 	// stop button
 	$('#stopButton').click(function() {
-		if($('#stopButton')[0].innerHTML === 'STOP'){
+		if($('#stopButton')[0].innerHTML === 'PAUSE'){
 			$('#myBar').addClass('pause');
 			$('#stopButton')[0].innerHTML = 'RESUME';
 
 		} else {
-			$('#stopButton')[0].innerHTML = 'STOP';
+			$('#stopButton')[0].innerHTML = 'PAUSE';
+			$('#myBar')[0].style.backgroundColor = '#61B087';
 			$('#myBar').removeClass('pause');
 		}
 	});
@@ -197,13 +201,11 @@ function progressBarCountdown(){
 	function frame() {
 		if (width >= 100 || $('#myBar').hasClass('abort') || $('#myBar').hasClass('pause')) {
 			if (!$('#myBar').hasClass('pause')) {
-				if (!$('#myBar').hasClass('abort')) {
-					$('#promptStart')[0].innerHTML = '(Status: End)';
-				}
 				clearInterval(id);
 			} else {
 				$('#promptStart')[0].innerHTML = '(Status: Pausing)';
 			}
+			$('#myBar')[0].style.backgroundColor = '#C24332';
 		} else {
 			width += widthUnit;
 			$('#myBar')[0].style.width = width + '%';
@@ -211,12 +213,17 @@ function progressBarCountdown(){
 			$('#passingTime')[0].innerHTML = passingTime;
 			$('#promptStart')[0].innerHTML = '(Status: Speaking)';
 			$('#promptStart')[0].style.visibility = 'visible';
+			if (width == 100) {
+				$('#promptStart')[0].innerHTML = '(Status: End)';
+				$('#myBar')[0].style.backgroundColor = '#C24332';
+				$('#stopButton')[0].disabled = true;
+			}
 		}
 	}
 }
 
-function readingTimeCountdown(readingDeafault,callback){
-	var readingTime = document.getElementById('readingTimeInput').value || readingDeafault;
+function readingTimeCountdown(readingTimeDefault,callback){
+	var readingTime = document.getElementById('readingTimeInput').value || readingTimeDefault;
 	var id = setInterval(frame, 1000);
 	function frame() {
 		if (readingTime == 0 || $('#myBar').hasClass('abort') || $('#myBar').hasClass('pause')) {
@@ -227,8 +234,8 @@ function readingTimeCountdown(readingDeafault,callback){
 				clearInterval(id);
 				if ($('#speakingTimeSwitch')[0].checked){
 					$('#promptStart')[0].innerHTML = '(Status: Speaking)';
-					callback();
 				}
+				callback();
 			} else if ($('#myBar').hasClass('pause')) {
 				$('#promptStart')[0].innerHTML = '(Status: Pausing)';
 				$('#promptStart')[0].style.visibility = 'visible';
@@ -244,9 +251,9 @@ function readingTimeCountdown(readingDeafault,callback){
 	}
 }
 
-function timerReset(readingDeafault) {
+function timerReset(readingTimeDefault) {
 	$('#passingTime')[0].innerHTML = 0;
-	$('#readingTimeSec')[0].innerHTML = + document.getElementById('readingTimeInput').value || readingDeafault;
+	$('#readingTimeSec')[0].innerHTML = + document.getElementById('readingTimeInput').value || readingTimeDefault;
 	$('#promptStart')[0].style.visibility = 'visible';
 	$('#myBar')[0].style.width = 0;
 	$('#myBar').removeClass('pause');
@@ -256,23 +263,33 @@ function timerReset(readingDeafault) {
 	$('#promptStart')[0].innerHTML = '(click START to start the timer)';
 }
 
-function DisableAll() {
+function disableAll() {
 	$('#readingTimeSwitch')[0].disabled = true;
 	$('#readingTimeInput')[0].disabled = true;
 	$('#speakingTimeSwitch')[0].disabled = true;
 	$('#speakingTimeInput')[0].disabled = true;
-	$('#secondsSwitch')[0].disabled = true;
+	// $('#secondsSwitch')[0].disabled = true;
+}
+
+function disableStop() {
+	$('#stopButton')[0].disabled = true;
 }
 
 function enableAll() {
 	if ($('#customSetting').hasClass('custom')) {
-		$('#readingTimeInput')[0].disabled = false;
-		$('#speakingTimeInput')[0].disabled = false;
+		if ($('#readingTimeSwitch')[0].checked) {
+			$('#readingTimeInput')[0].disabled = false;
+		}
+		if ($('#speakingTimeSwitch')[0].checked) {
+			$('#speakingTimeInput')[0].disabled = false;
+		}
 	}
 	$('#readingTimeSwitch')[0].disabled = false;
 	$('#speakingTimeSwitch')[0].disabled = false;
 	$('#secondsSwitch')[0].disabled = false;
-	$('#speakingTimePrompt')[0].style.visibility = 'visible';
+	if ($('#secondsSwitch')[0].checked){
+		$('#speakingTimePrompt')[0].style.visibility = 'visible';
+	}
 }
 
 function predefindedSetUp() {
@@ -281,16 +298,24 @@ function predefindedSetUp() {
 	$('#startButton')[0].disabled = false;
 	$('#readingTimeSwitch')[0].checked = true;
 	$('#speakingTimeSwitch')[0].checked = true;
-	$('#secondsSwitch')[0].checked = true;
+	$('#secondsSwitch')[0].checked = false;
+	$('#speakingTimePrompt')[0].style.visibility = 'hidden';
+	$('#readingTimePrompt')[0].style.visibility = 'visible';
 	$('#myBar').addClass('abort');
 	$('#myBar').removeClass('pause');
 	$('#startButton')[0].innerHTML = 'START';
-	$('#stopButton')[0].innerHTML = 'STOP';
+	$('#stopButton')[0].innerHTML = 'PAUSE';
+	$('#totalTime').text('40');
 	$('#stopButton')[0].disabled = true;
 	$('#promptStart')[0].innerHTML = '(click START to start the timer)';
+	$('#myBar')[0].style.backgroundColor = '#61B087';
 
 }
 
+function inputInitializing(reading,speaking) {
+	$('#readingTimeInput')[0].value = reading;
+	$('#speakingTimeInput')[0].value = speaking;
+}
 // why using $('#custom')[0].checked returns false but still goes into the if statement???
 
 

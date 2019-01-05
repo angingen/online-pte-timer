@@ -46,7 +46,7 @@
   border-radius: 50%; }
 
 input:checked + .slider {
-  background-color: #2196F3; }
+  background-color: #6F91B5; }
 
 input:focus + .slider {
   box-shadow: 0 0 1px #2196F3; }
@@ -58,7 +58,7 @@ input:checked + .slider:before {
 
 #myProgress {
   width: 100%;
-  background-color: grey;
+  background-color: #CDCCCA;
   position: relative; }
   #myProgress p {
     position: absolute;
@@ -71,7 +71,7 @@ input:checked + .slider:before {
 #myBar {
   width: 0;
   height: 30px;
-  background-color: green; }
+  background-color: #61B087; }
 
 .timer-container {
   width: 450px; }
@@ -100,3 +100,14 @@ html {
 #startButton, #stopButton {
   width: 100px;
   text-align: center; }
+
+#focusModelButton, #startButton {
+  background-color: #355B94;
+  border: 1px solid #355B94; }
+
+#focusModelButton:hover, #startButton:hover {
+  background-color: #6F91B5;
+  border: 1px solid #6F91B5; }
+
+input:disabled {
+  background-color: #EEEBE7; }

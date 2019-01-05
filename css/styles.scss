@@ -1,3 +1,9 @@
+$lt-green: #61B087;
+$pte-blue: #355B94;
+$lt-gray: #CDCCCA;
+$pale-gray: #EEEBE7;
+$lt-blue: #6F91B5;
+$pale-blue: #B7E1E4;
 
 .timer-type-header {
 	position: relative;
@@ -55,7 +61,7 @@
 }
 
 input:checked + .slider {
-  background-color: #2196F3;
+  background-color: $lt-blue;
 }
 
 input:focus + .slider {
@@ -72,7 +78,7 @@ input:checked + .slider:before {
 // progress bar
 #myProgress {
 	width: 100%;
-	background-color: grey;
+	background-color: $lt-gray;
 	position: relative;
 	p {
 		position: absolute;
@@ -87,7 +93,7 @@ input:checked + .slider:before {
 #myBar {
 	width: 0;
 	height: 30px;
-	background-color: green;
+	background-color: $lt-green;
 }
 // progress bar end
 
@@ -130,5 +136,19 @@ html {
 	text-align: center;
 }
 
+#focusModelButton, #startButton {
+	background-color: $pte-blue;
+	border: 1px solid $pte-blue;
+}
+
+#focusModelButton:hover, #startButton:hover {
+	background-color: $lt-blue;
+	border: 1px solid $lt-blue;
+}
+
+
+input:disabled {
+	background-color: $pale-gray;
+}
 
 
