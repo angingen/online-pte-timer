@@ -1,3 +1,9 @@
+html, body {
+  height: 100%;
+  width: 100%;
+  padding: 0;
+  margin: 0; }
+
 .timer-type-header {
   position: relative;
   margin-top: 20px; }
@@ -73,18 +79,12 @@ input:checked + .slider:before {
   height: 30px;
   background-color: #61B087; }
 
-.timer-container {
+.timer-container, #startAndPasue {
   width: 450px; }
 
 @media (max-width: 450px) {
   .timer-container {
     width: 100%; } }
-
-html, body {
-  height: 100%;
-  width: 100%;
-  padding: 0;
-  margin: 0; }
 
 .wrapper {
   min-height: 100vh;
