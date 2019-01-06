@@ -115,15 +115,11 @@ input:checked + .slider:before {
 input:disabled {
   background-color: #EEEBE7; }
 
-#customSetting {
+#describeImage.active, #readAloud.active, #retellLecture.active, #customSetting.active {
   background-color: #C24332;
   border: 1px solid #C24332; }
 
-#customSetting.active {
-  background-color: #8e3125;
-  border: 1px solid #8e3125; }
-
-#customSetting:hover {
+#describeImage:hover, #readAloud:hover, #retellLecture:hover, #customSetting:hover {
   background-color: #a2382a;
   border: 1px solid #a2382a; }
 

@@ -127,8 +127,8 @@ input:checked + .slider:before {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
-    // background-color: blue;
 }
+
 #main-content {
     flex: 1;
 }
@@ -161,15 +161,11 @@ input:disabled {
 	background-color: $pale-gray;
 }
 
-#customSetting {
+#describeImage.active, #readAloud.active, #retellLecture.active, #customSetting.active {
 	@include btn-color($dk-red);
 }
 
-#customSetting.active {
-	@include btn-color($at-red);
-}
-
-#customSetting:hover {
+#describeImage:hover, #readAloud:hover, #retellLecture:hover, #customSetting:hover {
 	@include btn-color($hv-red);
 }
 
