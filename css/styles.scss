@@ -99,6 +99,8 @@ input:checked + .slider:before {
 	p {
 		position: absolute;
 		height: 30px;
+		line-height: 30px;
+		vertical-align: middle;
 		top: 0;
 		left: 0;
 		width: 100%;
@@ -114,7 +116,7 @@ input:checked + .slider:before {
 // progress bar end
 
 .timer-container, #startAndPasue {
-	width: 450px;
+	max-width: 450px;
 }
 
 @media (max-width: 450px) {
@@ -174,5 +176,21 @@ input:disabled {
 	padding-left: 5px;
 	// text-align: center;
 }
+
+
+
+// for small screen devices 
+@media (max-width:575px) {
+    .timer-container * {
+    	font-size: 0.8rem;
+    }
+    footer {
+    	font-size: 0.8rem;
+    	line-height: 34px;
+    	vertical-align: middle;
+    }
+}
+
+
 
 
