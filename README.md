@@ -10,8 +10,8 @@ Check out the timer [here](https://angingen.github.io/online-pte-timer/).
 
 ## Features:
 ### Three defualt timer types:
-Describe image (DI) timer: `25s reading time + 40s speaking time`
-Read aloud (RA) timer: `30s reading time + 40s speaking time`
+Describe image (DI) timer: `25s reading time + 40s speaking time` <br/>
+Read aloud (RA) timer: `30s reading time + 40s speaking time` <br/>
 Re-tell Lecture (RL) timer: `10s preparation time + 40s speaking time`
 
 ### A custom timer:
